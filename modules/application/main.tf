@@ -19,23 +19,29 @@ resource "aws_launch_template" "template" {
   user_data = base64encode(<<-EOF
 #!/bin/bash
 
-yum update -y
-yum install -y httpd
+dnf update -y
+dnf install -y httpd
 
-systemctl start httpd
 systemctl enable httpd
+systemctl start httpd
 
-COMPUTE_MACHINE_UUID=$$(cat /sys/devices/virtual/dmi/id/product_uuid | tr '[:upper:]' '[:lower:]')
+cat > /var/www/html/index.html <<HTML
+<html>
+<body>
+<h1>works!</h1>
+</body>
+</html>
+HTML
 
-TOKEN=$$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+chmod -R 755 /var/www
+chown -R apache:apache /var/www
 
-COMPUTE_INSTANCE_ID=$$(curl -H "X-aws-ec2-metadata-token: $${TOKEN}" http://169.254.169.254/latest/meta-data/instance-id)
+rm -f /etc/httpd/conf.d/welcome.conf
 
-echo "This message was generated on instance $${COMPUTE_INSTANCE_ID} with UUID $${COMPUTE_MACHINE_UUID}" > /var/www/html/index.html
+systemctl restart httpd
 
 EOF
   )
-
   network_interfaces {
     associate_public_ip_address = true
     delete_on_termination       = true
@@ -89,6 +95,12 @@ resource "aws_autoscaling_group" "asg" {
 
   vpc_zone_identifier = var.subnet_ids
 
+  target_group_arns = [
+    aws_lb_target_group.tg.arn
+  ]
+
+  health_check_type = "ELB"
+
   launch_template {
     id      = aws_launch_template.template.id
     version = "$Latest"
@@ -101,9 +113,3 @@ resource "aws_autoscaling_group" "asg" {
     ]
   }
 }
-
-resource "aws_autoscaling_attachment" "asg_attach" {
-  autoscaling_group_name = aws_autoscaling_group.asg.id
-  lb_target_group_arn    = aws_lb_target_group.tg.arn
-}
-
