@@ -22,3 +22,22 @@ variable "vpc_id" {
   description = "VPC ID"
   type        = string
 }
+variable "launch_template_name" {
+  description = "Launch template name"
+  type        = string
+}
+
+variable "alb_name" {
+  description = "Application load balancer name"
+  type        = string
+}
+
+variable "target_group_name" {
+  description = "Target group name"
+  type        = string
+}
+
+variable "asg_name" {
+  description = "Auto scaling group name"
+  type        = string
+}

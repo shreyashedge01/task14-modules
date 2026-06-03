@@ -1,3 +1,4 @@
+
 data "aws_ami" "amazon_linux" {
   most_recent = true
 
@@ -10,7 +11,7 @@ data "aws_ami" "amazon_linux" {
 }
 
 resource "aws_launch_template" "template" {
-  name = "cmtr-ouv17nh6-template"
+  name = var.launch_template_name
 
   image_id      = data.aws_ami.amazon_linux.id
   instance_type = "t3.micro"
@@ -47,7 +48,7 @@ EOF
 }
 
 resource "aws_lb" "alb" {
-  name               = "cmtr-ouv17nh6-lb"
+  name               = var.alb_name
   internal           = false
   load_balancer_type = "application"
 
@@ -59,7 +60,7 @@ resource "aws_lb" "alb" {
 }
 
 resource "aws_lb_target_group" "tg" {
-  name     = "cmtr-ouv17nh6-tg"
+  name     = var.target_group_name
   port     = 80
   protocol = "HTTP"
   vpc_id   = var.vpc_id
@@ -81,7 +82,7 @@ resource "aws_lb_listener" "listener" {
 }
 
 resource "aws_autoscaling_group" "asg" {
-  name             = "cmtr-ouv17nh6-asg"
+  name             = var.asg_name
   desired_capacity = 2
   max_size         = 2
   min_size         = 2
@@ -105,5 +106,4 @@ resource "aws_autoscaling_attachment" "asg_attach" {
   autoscaling_group_name = aws_autoscaling_group.asg.id
   lb_target_group_arn    = aws_lb_target_group.tg.arn
 }
-
 

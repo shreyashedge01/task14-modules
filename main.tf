@@ -41,4 +41,9 @@ module "application" {
   private_http_sg_id = module.network_security.private_http_sg_id
 
   vpc_id = module.network.vpc_id
+
+  launch_template_name = "cmtr-ouv17nh6-template"
+  alb_name             = "cmtr-ouv17nh6-lb"
+  target_group_name    = "cmtr-ouv17nh6-tg"
+  asg_name             = "cmtr-ouv17nh6-asg"
 }
