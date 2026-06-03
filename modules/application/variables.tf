@@ -4,17 +4,17 @@ variable "subnet_ids" {
 }
 
 variable "ssh_sg_id" {
-  description = "SSH SG ID"
+  description = "SSH security group ID"
   type        = string
 }
 
 variable "public_http_sg_id" {
-  description = "Public HTTP SG ID"
+  description = "Public HTTP security group ID"
   type        = string
 }
 
 variable "private_http_sg_id" {
-  description = "Private HTTP SG ID"
+  description = "Private HTTP security group ID"
   type        = string
 }
 
@@ -22,13 +22,14 @@ variable "vpc_id" {
   description = "VPC ID"
   type        = string
 }
+
 variable "launch_template_name" {
   description = "Launch template name"
   type        = string
 }
 
 variable "alb_name" {
-  description = "Application load balancer name"
+  description = "ALB name"
   type        = string
 }
 
@@ -38,6 +39,6 @@ variable "target_group_name" {
 }
 
 variable "asg_name" {
-  description = "Auto scaling group name"
+  description = "ASG name"
   type        = string
 }

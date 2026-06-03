@@ -1,5 +1,5 @@
 variable "vpc_name" {
-  description = "VPC Name"
+  description = "VPC name"
   type        = string
 }
 
@@ -9,52 +9,52 @@ variable "vpc_cidr" {
 }
 
 variable "subnet_public_a_name" {
-  description = "Subnet A name"
+  description = "Public subnet A name"
   type        = string
 }
 
 variable "subnet_public_b_name" {
-  description = "Subnet B name"
+  description = "Public subnet B name"
   type        = string
 }
 
 variable "subnet_public_c_name" {
-  description = "Subnet C name"
+  description = "Public subnet C name"
   type        = string
 }
 
 variable "subnet_public_a_cidr" {
-  description = "Subnet A CIDR"
+  description = "Public subnet A CIDR"
   type        = string
 }
 
 variable "subnet_public_b_cidr" {
-  description = "Subnet B CIDR"
+  description = "Public subnet B CIDR"
   type        = string
 }
 
 variable "subnet_public_c_cidr" {
-  description = "Subnet C CIDR"
+  description = "Public subnet C CIDR"
   type        = string
 }
 
 variable "az_a" {
-  description = "AZ A"
+  description = "Availability Zone A"
   type        = string
 }
 
 variable "az_b" {
-  description = "AZ B"
+  description = "Availability Zone B"
   type        = string
 }
 
 variable "az_c" {
-  description = "AZ C"
+  description = "Availability Zone C"
   type        = string
 }
 
 variable "igw_name" {
-  description = "IGW Name"
+  description = "Internet gateway name"
   type        = string
 }
 
@@ -62,3 +62,4 @@ variable "rt_name" {
   description = "Route table name"
   type        = string
 }
+
